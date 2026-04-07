@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'package:http/http.dart' as http;
 
 const version = '0.0.1';
 
@@ -38,4 +39,20 @@ void printUsage() {
   print(
     "The following commands are valid: 'help', 'version', 'search <ARTICLE-TITLE>'",
   );
+}
+
+Future<String> getWikipediaArticle(String articleTitle) async {
+  final url = Uri.https(
+    'en.wikipedia.org', // Wikipedia API domain
+    '/api/rest_v1/page/summary/$articleTitle', // Endpoint for fetching article summary
+  );
+
+  final response = await http.get(url); // Make HTTP GET request
+
+  if (response.statusCode == 200) {
+    return response.body; // Return the response body if the request was successful
+  }
+
+  // Return an error message if the request failed
+  return 'Error fetching article $articleTitle. Status code: ${response.statusCode}';
 }
