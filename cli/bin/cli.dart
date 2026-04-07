@@ -29,7 +29,9 @@ void searchWikipedia(List<String>? arguments) {
     articleTitle = arguments.join(' ');
   }
 
-  print('Current article: $articleTitle');
+  print('Looking up article: $articleTitle');
+  print('Here is the summary of the article:');
+  print('(Pretend this is the summary of the article $articleTitle.)');
 }
 
 void printUsage() {
