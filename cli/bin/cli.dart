@@ -16,7 +16,7 @@ void main(List<String> arguments) {
   }
 }
 
-void searchWikipedia(List<String>? arguments) {
+void searchWikipedia(List<String>? arguments) async {
   final String articleTitle;
 
   // If no article title is provided as an argument, prompt the user to enter one.
@@ -24,15 +24,23 @@ void searchWikipedia(List<String>? arguments) {
     print('Please provide an article title.');
 
     // Await user input from the console.
-    articleTitle = stdin.readLineSync() ?? '';
+    final inputFromStdin = stdin.readLineSync();
+    if (inputFromStdin == null || inputFromStdin.isEmpty) {
+      print('No article title provided. Exiting.');
+      return; // Exit if no valid input is received.
+    }
+
+    articleTitle = inputFromStdin;
   } else {
     // Join the arguments to form the full article title.
     articleTitle = arguments.join(' ');
   }
 
   print('Looking up article: $articleTitle');
-  print('Here is the summary of the article:');
-  print('(Pretend this is the summary of the article $articleTitle.)');
+
+  // Call Wikipedia API to fetch the article summary and print the result.
+  var articleSummary = await getWikipediaArticle(articleTitle);
+  print(articleSummary); // Print the full article response (raw JSON)
 }
 
 void printUsage() {
