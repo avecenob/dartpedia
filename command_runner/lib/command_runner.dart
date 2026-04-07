@@ -1,4 +1,4 @@
-/// Support for doing something awesome.
+/// A simple command runner to handle command line arguments.
 ///
 /// More dartdocs go here.
 library;
